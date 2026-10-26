@@ -151,9 +151,8 @@
   <div class="dots hide" id="dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
 
   <section class="step active" id="s0">
-    <img class="hero" src="khinkali.webp" alt="Khinkali">
     <h1>Français <em>ou</em> ქართული ?</h1>
-    <p>Choisis la langue de l'aventure<br><span class="ka-line">აირჩიე თავგადასავლის ენა</span></p>
+    <p>Choisis la langue de ma sérénade 🎻<br><span class="ka-line">აირჩიე ჩემი სერენადის ენა</span></p>
     <div class="row langs">
       <button class="love" data-lang="fr">🇫🇷 Français</button>
       <button class="love" data-lang="ka">🇬🇪 ქართული</button>
@@ -217,27 +216,27 @@ addEventListener('load',()=>['aragorn.gif','mako.webp','khinkali.svg'].forEach(s
 const T = {
   fr:{
     s1h:'Bonjour Mako',
-    s1p:'Je te présente l\'histoire : j\'ai une surprise pour toi… et je n\'en dirai pas plus pour l\'instant. 🤫<br><br><b>Serais-tu prête à vivre une aventure avec moi ?</b>',
-    yes:'Oui, ça passe ! 💖',
+    s1p:'Je veux te voir. Comme je chante faux, voici ma sérénade numérique 🎻😅<br>Il y a même une surprise à la clé… mais motus 🤫<br><br><b>Alors, partante pour me voir ?</b>',
+    yes:'Oui, je veux bien ! 💖',
     no:['Non','Réessaie 😏','Pas par là !','Allez…','Tu veux dire oui 🥺','Presque !'],
-    s2h:'À quelle heure es-tu <em>dispo</em> ?',
+    s2h:'À quelle heure es-tu <em>dispo</em> mardi ?',
     confirm:'C\'est cette heure-là ✨',
     s3h:'C\'est noté, <em>Mako</em> !',
-    recap:t=>`Je note ${t}, rien que nous deux. Appuie sur Envoyer pour me répondre 🥟💖`,
+    recap:t=>`Je note mardi à ${t}, rien que nous deux. Appuie sur Envoyer pour me répondre 🥟💖`,
     send:'Envoyer 💌', copy:'Copier le message', copied:'Message copié ✔',
-    sms:t=>`Oui, je suis partante pour l'aventure ! 🥟💖 Je suis dispo à ${t}.`
+    sms:t=>`Ta sérénade numérique a marché 😄🥟💖 Je suis dispo mardi à ${t}.`
   },
   ka:{
     s1h:'გამარჯობა, მაკო',
-    s1p:'გაგაცნობ ისტორიას: მაქვს შენთვის სიურპრიზი… და ჯერ მეტს აღარაფერს ვიტყვი. 🤫<br><br><b>მზად ხარ, ჩემთან ერთად თავგადასავალი დაიწყო?</b>',
-    yes:'კი, წავედით! 💖',
+    s1p:'მინდა შენი ნახვა. რადგან ცუდად ვმღერი, აი, ჩემი ციფრული სერენადა 🎻😅<br>სიურპრიზიც გელოდება… მაგრამ ხმას არ ვიღებ 🤫<br><br><b>მაშ, დამთანხმდები შეხვედრაზე?</b>',
+    yes:'კი, ძალიან მინდა! 💖',
     no:['არა','სცადე ისევ 😏','იქით არა!','აბა, აბა…','ხომ გინდა თქვა კი 🥺','კინაღამ!'],
-    s2h:'რომელ საათზე ხარ <em>თავისუფალი</em>?',
+    s2h:'სამშაბათს რომელ საათზე ხარ <em>თავისუფალი</em>?',
     confirm:'ეს საათი კარგია ✨',
     s3h:'ჩავიწერე, <em>მაკო</em>!',
-    recap:t=>`ჩავიწერე ${t}, მხოლოდ ჩვენ ორნი. დააჭირე „გაგზავნას“, რომ მიპასუხო 🥟💖`,
+    recap:t=>`ჩავიწერე სამშაბათი, ${t}, მხოლოდ ჩვენ ორნი. დააჭირე „გაგზავნას“, რომ მიპასუხო 🥟💖`,
     send:'გაგზავნა 💌', copy:'შეტყობინების კოპირება', copied:'კოპირებულია ✔',
-    sms:t=>`კი, მზად ვარ თავგადასავლისთვის! 🥟💖 თავისუფალი ვარ ${t}-ზე.\n(FR : Oui, je suis partante pour l'aventure ! Je suis dispo à ${t}.)`
+    sms:t=>`შენმა ციფრულმა სერენადამ გაჭრა 😄🥟💖 სამშაბათს ${t}-ზე თავისუფალი ვარ.\n(FR : Ta sérénade numérique a marché 😄 Je suis dispo mardi à ${t}.)`
   }
 };
 function applyLang(l){
