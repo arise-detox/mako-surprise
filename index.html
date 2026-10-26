@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#120a1a">
+<title>Une surprise pour toi</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎁%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,500&family=Outfit:wght@400;500;600&family=Noto+Serif+Georgian:wght@600;800&family=Noto+Sans+Georgian:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold1:#fff1b8; --gold2:#f5c76b; --gold3:#c8902c;
+    --pink:#ff5d8f; --pink2:#ff8fb1;
+    --ink:#fff7ea;
+    --serif:"Fraunces","Playfair Display",Georgia,serif;
+    --sans:"Outfit",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;margin:0}
+  body{
+    font-family:var(--sans);color:var(--ink);
+    background:
+      radial-gradient(900px 600px at 15% 0%,#4a1d5a66,transparent 60%),
+      radial-gradient(700px 600px at 100% 100%,#ff5d8f33,transparent 60%),
+      linear-gradient(170deg,#0d0814,#1c0e26 55%,#2b1230);
+    display:flex;align-items:center;justify-content:center;
+    padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));
+    overflow-x:hidden;overflow-y:auto;
+  }
+  /* étoiles */
+  .star{position:fixed;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.2;animation:tw 3s ease-in-out infinite;pointer-events:none}
+  @keyframes tw{50%{opacity:.95;transform:scale(1.6)}}
+
+  .card{
+    position:relative;z-index:2;width:100%;max-width:420px;min-height:500px;margin:auto;
+    background:linear-gradient(160deg,rgba(60,35,80,.92),rgba(38,20,52,.92));
+    
+    border:1px solid rgba(245,199,107,.35);border-radius:30px;
+    padding:26px 22px 30px;text-align:center;
+    box-shadow:0 25px 70px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.2);
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .dots{display:flex;gap:9px;justify-content:center;margin-bottom:20px}
+  .dots i{width:8px;height:8px;border-radius:99px;background:rgba(255,255,255,.25);transition:.4s}
+  .dots i.on{width:26px;background:linear-gradient(90deg,var(--gold1),var(--gold2))}
+
+  .step{display:none;flex-direction:column;align-items:center;gap:18px}
+  .step.active{display:flex}
+  .step.active > *{animation:rise .35s cubic-bezier(.2,.8,.2,1) both}
+  .step.active > *:nth-child(2){animation-delay:.04s}
+  .step.active > *:nth-child(3){animation-delay:.08s}
+  .step.active > *:nth-child(4){animation-delay:.12s}
+  .step.active > *:nth-child(5){animation-delay:.16s}
+  .step.active > *:nth-child(6){animation-delay:.2s}
+  @keyframes rise{from{opacity:0;transform:translateY(22px) scale(.97)}to{opacity:1;transform:none}}
+
+  h1{
+    font-family:var(--serif);font-weight:800;font-size:2rem;line-height:1.1;margin:0;letter-spacing:-.5px;
+    background:linear-gradient(180deg,var(--gold1),var(--gold2) 55%,var(--gold3));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 14px rgba(245,199,107,.25));
+  }
+  h1 em{font-style:italic;font-weight:500}
+  p{margin:0;font-size:1.08rem;line-height:1.55;color:#fff3e0;opacity:.92}
+  p b{font-family:var(--serif);font-weight:600;font-size:1.2rem;color:#fff;display:inline-block;margin-top:2px}
+
+  .icon{font-size:3.8rem;animation:float 3.2s ease-in-out infinite;filter:drop-shadow(0 8px 18px rgba(255,93,143,.45))}
+  @keyframes float{50%{transform:translateY(-9px) rotate(4deg)}}
+
+  button{
+    font-family:var(--sans);font-weight:600;font-size:1.05rem;border:0;border-radius:999px;
+    padding:15px 30px;cursor:pointer;color:#2a1030;
+    background:linear-gradient(135deg,var(--gold1),var(--gold2) 60%,#ffb36b);
+    box-shadow:0 10px 26px rgba(245,199,107,.4),inset 0 1px 0 rgba(255,255,255,.7);
+    transition:transform .2s,box-shadow .2s;position:relative;
+  }
+  button:hover{box-shadow:0 12px 32px rgba(245,199,107,.55),inset 0 1px 0 #fff}
+  button:active{transform:scale(.95)}
+  button.ghost{background:rgba(255,255,255,.1);color:#fff;box-shadow:none;border:1px solid rgba(255,255,255,.2)}
+  button.love{color:#fff;background:linear-gradient(135deg,#ff7aa5,var(--pink) 60%,#e23a76);box-shadow:0 10px 26px rgba(255,93,143,.5),inset 0 1px 0 rgba(255,255,255,.4)}
+  .link{background:none;box-shadow:none;color:#fff;opacity:.65;font-size:.9rem;padding:6px 10px;text-decoration:underline}
+  .row{display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;min-height:60px}
+  #yes{transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+  #no{transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .4s}
+  #yes.pulse{animation:beat 1.8s ease-in-out infinite}
+  @keyframes beat{50%{box-shadow:0 10px 40px rgba(255,93,143,.9)}}
+
+  /* heure */
+  .time{font-family:var(--serif);font-weight:800;font-size:4rem;line-height:1;
+    background:linear-gradient(180deg,#fff,var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+  .sky{font-size:2.6rem;transition:.3s}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:36px;background:transparent;margin:0;touch-action:pan-y}
+  input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:99px;background:linear-gradient(90deg,#ffb36b,#ff5d8f,#6b3fa0,#1d1b4b)}
+  input[type=range]::-moz-range-track{height:8px;border-radius:99px;background:linear-gradient(90deg,#ffb36b,#ff5d8f,#6b3fa0,#1d1b4b)}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;margin-top:-11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--gold2));border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.5)}
+  input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--gold2);border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.5)}
+  .scale{display:flex;justify-content:space-between;width:100%;font-size:.82rem;opacity:.65;margin-top:-8px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .chip{padding:8px 12px;font-size:.88rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.22);box-shadow:none}
+  .chip.on{background:rgba(245,199,107,.25);border-color:var(--gold2)}
+
+  /* pochette */
+  .stage{--s:min(250px,56vw);position:relative;width:var(--s);height:var(--s);margin:30px 0 26px}
+  .cover{
+    width:100%;height:100%;display:block;border-radius:14px;object-fit:contain;
+    border:2px solid var(--gold2);background:#0006;
+    box-shadow:0 0 0 6px rgba(245,199,107,.12),0 18px 60px rgba(0,0,0,.65),0 0 60px rgba(245,199,107,.35);
+    animation:reveal .7s cubic-bezier(.2,.9,.2,1) both,glow 3s .7s ease-in-out infinite;
+    transition:transform .2s;cursor:pointer;
+  }
+  @keyframes reveal{from{opacity:0;transform:scale(.4) rotate(-12deg);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+  @keyframes glow{50%{box-shadow:0 0 0 6px rgba(245,199,107,.2),0 18px 60px rgba(0,0,0,.65),0 0 90px rgba(255,93,143,.55)}}
+  .orbit{position:absolute;inset:0;animation:spin 16s linear infinite;pointer-events:none}
+  .orbit span{position:absolute;left:50%;top:50%;font-size:1.8rem;margin:-.9rem;
+    transform:rotate(var(--a)) translateY(calc(var(--s) * -.78)) rotate(calc(-1 * var(--a)));
+    animation:cnt 16s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes cnt{to{transform:rotate(-360deg)}}
+  .fallback{display:none;font-size:5rem;line-height:var(--s)}
+
+  .fx{position:fixed;pointer-events:none;z-index:5;will-change:transform,opacity}
+  .fly{position:fixed;bottom:-50px;pointer-events:none;z-index:1;animation:up linear forwards}
+  @keyframes up{to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+  .sub{font-size:.9rem;opacity:.7}
+  body.ka{--serif:"Noto Serif Georgian",Georgia,serif;--sans:"Noto Sans Georgian",system-ui,sans-serif}
+  body.ka h1{font-size:1.75rem;line-height:1.25;letter-spacing:0}
+  body.ka .time{font-family:var(--sans)}
+  .dots.hide{visibility:hidden}
+  .hero{width:150px;height:150px;border-radius:50%;object-fit:cover;border:3px solid var(--gold2);box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 40px rgba(245,199,107,.35);animation:float 3.5s ease-in-out infinite}
+  .ka-line{font-family:"Noto Sans Georgian",system-ui,sans-serif;opacity:.9}
+  .langs{flex-direction:column;gap:12px;width:100%}
+  .langs button{width:100%;max-width:260px}
+  .kh{display:block;width:1.15em;height:1.15em;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4))}
+  .gif{display:block;border-radius:16px;border:2px solid rgba(245,199,107,.6);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+  .gif.wide{width:100%;max-width:330px;height:auto}
+  .gif.sq{width:130px;height:130px;object-fit:cover}
+  .gif.tall{width:78px;height:auto}
+  .timewrap{display:flex;align-items:center;gap:12px}
+  .runner{margin:0;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .runner figcaption{font-size:.85rem;opacity:.75;font-style:italic}
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  }
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="dots hide" id="dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+
+  <section class="step active" id="s0">
+    <img class="hero" src="khinkali.webp" alt="Khinkali">
+    <h1>Français <em>ou</em> ქართული ?</h1>
+    <p>Choisis la langue de l'aventure<br><span class="ka-line">აირჩიე თავგადასავლის ენა</span></p>
+    <div class="row langs">
+      <button class="love" data-lang="fr">🇫🇷 Français</button>
+      <button class="love" data-lang="ka">🇬🇪 ქართული</button>
+    </div>
+  </section>
+
+  <section class="step" id="s1">
+    <div class="icon">🎁</div>
+    <h1 data-t="s1h"></h1>
+    <p data-t="s1p"></p>
+    <div class="row" id="answerRow">
+      <button class="love pulse" id="yes" data-t="yes"></button>
+      <button class="ghost" id="no"></button>
+    </div>
+  </section>
+
+  <section class="step" id="s2">
+    <h1 data-t="s2h"></h1>
+    <div class="timewrap"><span class="sky" id="sky">🌙</span><span class="time" id="timeLabel" aria-live="polite">20:00</span></div>
+    <input type="range" id="slider" min="0" max="26" value="16" step="1" aria-label="Heure de disponibilité">
+    <div class="scale"><span>12h</span><span>18h</span><span>00h</span></div>
+    <div class="chips" id="chips">
+      <button class="chip" data-v="12">18:00</button>
+      <button class="chip on" data-v="16">20:00</button>
+      <button class="chip" data-v="19">21:30</button>
+      <button class="chip" data-v="22">23:00</button>
+    </div>
+    <button class="love" id="confirm" data-t="confirm"></button>
+  </section>
+
+  <section class="step" id="s3">
+    <div class="stage" id="stage">
+      <div class="orbit">
+        <span style="--a:0deg">💖</span><span style="--a:45deg"><img class="kh" src="khinkali.svg" alt=""></span><span style="--a:90deg">💕</span><span style="--a:135deg"><img class="kh" src="khinkali.svg" alt=""></span>
+        <span style="--a:180deg">💗</span><span style="--a:225deg"><img class="kh" src="khinkali.svg" alt=""></span><span style="--a:270deg">❤️</span><span style="--a:315deg"><img class="kh" src="khinkali.svg" alt=""></span>
+      </div>
+      <img class="cover" id="cover" src="mako.webp" alt="Pochette Diva Georgia">
+      <div class="cover fallback" id="fallback">😍</div>
+    </div>
+    <h1 data-t="s3h"></h1>
+    <p id="recap"></p>
+    <div class="row"><button class="love" id="send" data-t="send"></button></div>
+    <img class="gif wide" src="aragorn.gif" alt="Let's do this">
+    <button class="link" id="copy" data-t="copy"></button>
+  </section>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+const steps = [...document.querySelectorAll('.step')];
+const dots = [...document.querySelectorAll('.dots i')];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const EMOJIS = ['💖','K','💕','K','❤️','💗','✨','K'];
+let chosen = '20:00';
+let lang = 'fr';
+
+/* précharge les images des étapes suivantes */
+addEventListener('load',()=>['aragorn.gif','mako.webp','khinkali.svg'].forEach(s=>{new Image().src=s}));
+
+/* textes : français / géorgien */
+const T = {
+  fr:{
+    s1h:'Bonjour Mako',
+    s1p:'Je te présente l\'histoire : j\'ai une surprise pour toi… et je n\'en dirai pas plus pour l\'instant. 🤫<br><br><b>Serais-tu prête à vivre une aventure avec moi ?</b>',
+    yes:'Oui, ça passe ! 💖',
+    no:['Non','Réessaie 😏','Pas par là !','Allez…','Tu veux dire oui 🥺','Presque !'],
+    s2h:'À quelle heure es-tu <em>dispo</em> ?',
+    confirm:'C\'est cette heure-là ✨',
+    s3h:'C\'est noté, <em>Mako</em> !',
+    recap:t=>`Je note ${t}, rien que nous deux. Appuie sur Envoyer pour me répondre 🥟💖`,
+    send:'Envoyer 💌', copy:'Copier le message', copied:'Message copié ✔',
+    sms:t=>`Oui, je suis partante pour l'aventure ! 🥟💖 Je suis dispo à ${t}.`
+  },
+  ka:{
+    s1h:'გამარჯობა, მაკო',
+    s1p:'გაგაცნობ ისტორიას: მაქვს შენთვის სიურპრიზი… და ჯერ მეტს აღარაფერს ვიტყვი. 🤫<br><br><b>მზად ხარ, ჩემთან ერთად თავგადასავალი დაიწყო?</b>',
+    yes:'კი, წავედით! 💖',
+    no:['არა','სცადე ისევ 😏','იქით არა!','აბა, აბა…','ხომ გინდა თქვა კი 🥺','კინაღამ!'],
+    s2h:'რომელ საათზე ხარ <em>თავისუფალი</em>?',
+    confirm:'ეს საათი კარგია ✨',
+    s3h:'ჩავიწერე, <em>მაკო</em>!',
+    recap:t=>`ჩავიწერე ${t}, მხოლოდ ჩვენ ორნი. დააჭირე „გაგზავნას“, რომ მიპასუხო 🥟💖`,
+    send:'გაგზავნა 💌', copy:'შეტყობინების კოპირება', copied:'კოპირებულია ✔',
+    sms:t=>`კი, მზად ვარ თავგადასავლისთვის! 🥟💖 თავისუფალი ვარ ${t}-ზე.\n(FR : Oui, je suis partante pour l'aventure ! Je suis dispo à ${t}.)`
+  }
+};
+function applyLang(l){
+  lang=l; document.documentElement.lang=l; document.body.classList.toggle('ka',l==='ka');
+  document.querySelectorAll('[data-t]').forEach(el=>{ el.innerHTML=T[l][el.dataset.t]; });
+  no.textContent=T[l].no[Math.min(tries,T[l].no.length-1)];
+}
+/* un khinkali dessiné ou un emoji */
+function glyph(k){ return k==='K' ? '<img src="khinkali.svg" alt="" style="width:1.15em;height:1.15em;display:block">' : k; }
+
+/* étoiles de fond */
+for(let i=0;i<22;i++){
+  const s=document.createElement('i'); s.className='star';
+  s.style.left=Math.random()*100+'vw'; s.style.top=Math.random()*100+'vh';
+  s.style.animationDelay=(Math.random()*3)+'s'; s.style.animationDuration=(2+Math.random()*3)+'s';
+  s.style.transform='scale('+(.5+Math.random())+')';
+  document.body.appendChild(s);
+}
+
+/* explosion d'emojis */
+function burst(x,y,n=22){
+  if(reduce) return;
+  for(let i=0;i<n;i++){
+    const e=document.createElement('div'); e.className='fx';
+    e.innerHTML=glyph(EMOJIS[Math.floor(Math.random()*EMOJIS.length)]);
+    e.style.left=x+'px'; e.style.top=y+'px'; e.style.fontSize=(1.2+Math.random()*1.4)+'rem';
+    document.body.appendChild(e);
+    const a=Math.random()*Math.PI*2, d=90+Math.random()*190;
+    e.animate([
+      {transform:'translate(-50%,-50%) scale(.3)',opacity:1},
+      {transform:`translate(calc(-50% + ${Math.cos(a)*d}px),calc(-50% + ${Math.sin(a)*d-60}px)) scale(1.2) rotate(${Math.random()*80-40}deg)`,opacity:1,offset:.6},
+      {transform:`translate(calc(-50% + ${Math.cos(a)*d*1.1}px),calc(-50% + ${Math.sin(a)*d+60}px)) scale(.8)`,opacity:0}
+    ],{duration:900+Math.random()*500,easing:'cubic-bezier(.2,.7,.3,1)'}).onfinish=()=>e.remove();
+  }
+}
+
+function go(n){
+  steps.forEach((s,i)=>s.classList.toggle('active',i===n));
+  $('#dots').classList.toggle('hide',n===0);
+  dots.forEach((d,i)=>d.classList.toggle('on',i===n-1));
+  if(n===3){ celebrate(); const r=$('#stage').getBoundingClientRect(); setTimeout(()=>burst(r.left+r.width/2,r.top+r.height/2,22),250); }
+}
+
+/* Étape 0 : choix de la langue */
+document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',e=>{
+  applyLang(b.dataset.lang);
+  const r=b.getBoundingClientRect(); burst(r.left+r.width/2,r.top+r.height/2,14);
+  setTimeout(()=>go(1),250);
+}));
+
+/* Étape 1 : le "Non" s'enfuit */
+const yes=$('#yes'), no=$('#no');
+let tries=0;
+function dodge(e){
+  if(e) e.preventDefault();
+  tries++;
+  no.textContent = T[lang].no[Math.min(tries,T[lang].no.length-1)];
+  const max=Math.min(110,innerWidth/2-70);
+  no.style.transform=`translate(${(Math.random()*2-1)*max}px,${(Math.random()*2-1)*70}px) rotate(${Math.random()*16-8}deg)`;
+  yes.style.transform=`scale(${Math.min(1+tries*.06,1.4)})`;
+  if(tries>=7){ no.style.opacity=0; no.style.pointerEvents='none'; }
+}
+no.addEventListener('pointerenter',dodge);
+no.addEventListener('pointerdown',dodge);
+no.addEventListener('click',dodge);
+yes.addEventListener('click',e=>{
+  navigator.vibrate&&navigator.vibrate(40);
+  const r=yes.getBoundingClientRect(); burst(r.left+r.width/2,r.top+r.height/2,16);
+  setTimeout(()=>go(2),250);
+});
+
+/* Étape 2 : curseur d'heure (12:00 -> 01:00, pas de 30 min) */
+const slider=$('#slider');
+function fmt(v){
+  const m=12*60+v*30, h=Math.floor(m/60)%24, mm=m%60;
+  return String(h).padStart(2,'0')+':'+String(mm).padStart(2,'0');
+}
+function upd(){
+  const v=+slider.value; chosen=fmt(v);
+  $('#timeLabel').textContent=chosen;
+  const h=12+v*.5;
+  $('#sky').textContent = h<17?'☀️':h<19.5?'🌇':'🌙';
+  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',+c.dataset.v===v));
+  navigator.vibrate&&navigator.vibrate(8);
+}
+slider.addEventListener('input',upd); upd();
+$('#chips').addEventListener('click',e=>{
+  const c=e.target.closest('.chip'); if(!c) return;
+  slider.value=c.dataset.v; upd();
+});
+$('#confirm').addEventListener('click',e=>{
+  $('#recap').textContent=T[lang].recap(chosen);
+  const r=e.currentTarget.getBoundingClientRect(); burst(r.left+r.width/2,r.top,18);
+  setTimeout(()=>go(3),200);
+});
+
+/* Étape 3 : pochette, cœurs et khinkali */
+$('#cover').addEventListener('error',()=>{ $('#cover').style.display='none'; $('#fallback').style.display='block'; });
+$('#cover').addEventListener('click',e=>burst(e.clientX,e.clientY,16));
+let timer;
+function celebrate(){
+  clearInterval(timer);
+  if(reduce) return;
+  timer=setInterval(()=>{
+    const f=document.createElement('div'); f.className='fly';
+    f.innerHTML=glyph(EMOJIS[Math.floor(Math.random()*EMOJIS.length)]);
+    f.style.left=Math.random()*100+'vw';
+    f.style.fontSize=(1.3+Math.random()*1.7)+'rem';
+    f.style.animationDuration=(5+Math.random()*4)+'s';
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),9500);
+  },500);
+}
+
+/* Envoi de la réponse par SMS (destinataire et message pré-remplis) */
+const PHONE='33674428751';
+const message=()=>T[lang].sms(chosen);
+$('#send').addEventListener('click',e=>{
+  const r=e.currentTarget.getBoundingClientRect(); burst(r.left+r.width/2,r.top,20);
+  location.href='sms:+'+PHONE+'?&body='+encodeURIComponent(message());
+});
+$('#copy').addEventListener('click',async e=>{
+  try{ await navigator.clipboard.writeText(message()); e.target.textContent=T[lang].copied; }
+  catch(_){ e.target.textContent=message(); }
+});
+applyLang('fr');
+</script>
+</body>
+</html>
